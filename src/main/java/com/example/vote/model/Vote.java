@@ -1,10 +1,18 @@
-package com.example.vote.dto;
+package com.example.vote.model;
 
-public class VoteRequest {
+public class Vote {
 
+    private Integer voteId;
     private String voteTitle;
     private String content;
     private String imageUrl;
+
+    public Integer getVoteId() {
+        return voteId;
+    }
+    public void setVoteId(Integer voteId) {
+        this.voteId = voteId;
+    }
 
     public String getVoteTitle() {
         return voteTitle;
