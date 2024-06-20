@@ -13,6 +13,13 @@
       <br>
       <button type="submit">更新</button>
     </form>
+    <ul>
+      <li v-for="item in items" :key="item.itemId">
+        <div>{{ item.itemTitle }}    票數: {{ item.votes }}</div>
+        <input type="text" id="author" v-model="item.itemTitle" required>
+        <button @click="updateItem(item)">更新</button>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -24,6 +31,7 @@ export default {
   data(){
     return {
       event: [],
+      items: [],
       msg:''
     }
   },
@@ -40,6 +48,12 @@ export default {
             console.log(data);
             this.event = data;
           });
+      fetch("/api/votes/"+voteId+"/items")
+          .then((response) => response.json())
+          .then((data) => {
+            this.items = data;
+            console.log(data);
+          });
     },
     updateEvent(){
       console.log(this.event.voteId);
@@ -50,6 +64,30 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(this.event)
+      })
+          .then(response => {
+            console.log('Status code:', response.status);
+            if (!response.ok) {
+              this.msg = '新增失敗請再試一次'
+              throw new Error(response.status);
+            }
+            return response.json()
+          })
+          .then(data => {
+            console.log('新增成功：', data);
+            this.$router.push('/VoteEvent/'+data.voteId);
+          })
+          .catch(error => {
+            console.error('Error deleting book:', error);
+          });
+    },
+    updateItem(item){
+      fetch('/api/items/'+item.itemId, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
       })
           .then(response => {
             console.log('Status code:', response.status);

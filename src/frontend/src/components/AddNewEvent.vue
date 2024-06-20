@@ -4,13 +4,20 @@
   <div class="add-event">
     <form @submit.prevent="addEvent">
       <label for="title">活動名稱：</label>
-      <input type="text" id="title" v-model="newEvent.voteTitle" required>
+      <input type="text" id="title" v-model="newEvent.voteRequest.voteTitle" required>
 
       <label for="author">活動內容：</label>
-      <input type="text" id="author" v-model="newEvent.content" required>
+      <input type="text" id="author" v-model="newEvent.voteRequest.content" required>
 
       <label for="imageUrl">活動圖片 URL：</label>
-      <input type="text" id="imageUrl" v-model="newEvent.imageUrl" required>
+      <input type="text" id="imageUrl" v-model="newEvent.voteRequest.imageUrl" required>
+
+      <div v-for="(item, index) in newEvent.itemRequests" :key="index">
+        <label>選項 {{ index + 1 }}：</label>
+        <input type="text" v-model="item.itemTitle" required>
+        <button type="button" @click="removeItem(index)">刪除選項</button>
+      </div>
+      <button type="button" @click="addItem">新增選項</button>
 
       <button type="submit">新增活動</button>
     </form>
@@ -24,9 +31,16 @@ export default {
   data(){
     return {
       newEvent: {
-        voteTitle: '',
-        imageUrl: '',
-        content:''
+        voteRequest:{
+          voteTitle: '',
+          imageUrl: '',
+          content:''
+        },
+        itemRequests:[
+          {
+            itemTitle: '',
+          }
+        ]
       },
       msg:''
     }
@@ -56,6 +70,12 @@ export default {
           .catch(error => {
             console.error('新增失败：', error);
           });
+    },
+    addItem() {
+      this.newEvent.itemRequests.push({ title: '' });
+    },
+    removeItem(index) {
+      this.newEvent.itemRequests.splice(index, 1);
     }
   }
 
