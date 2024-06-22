@@ -16,4 +16,4 @@
 
 ### 參考資料
   * 後端參考[鐵人賽 - Spring Boot 零基礎入門](https://ithelp.ithome.com.tw/users/20151036/ironman/6130) 教學建立
-  * 前端參考[Full Stack Java development with Spring Boot and VueJS](https://www.danvega.dev/blog/full-stack-java)) 教學建立 
+  * 前端參考[Full Stack Java development with Spring Boot and VueJS](https://www.danvega.dev/blog/full-stack-java) 教學建立 
